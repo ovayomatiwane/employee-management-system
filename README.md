@@ -1,0 +1,32 @@
+Task Description
+1. Management often needs to hire consultants to lessen the workload over the festive periods.
+2. You are asked to assist the management team with a consultant’s role-based salary calculation
+system.
+3. Management assigns consultants to tasks and every task has its own duration.
+4. A consultant can be assigned multiple tasks but cannot work more than 12 hours a day.
+5. Consultant’s salary is calculated based on the role they were assigned to.
+6. Consultant’s roles are categorized into the following levels and each role has a Rate per hour:
+
+a. Consultant Level 1
+b. Consultant Level 2
+
+7. Management needs to be able to capture the total hours worked for each consultant for a specific
+day.
+8. Changing the hourly rate or changing the consultant role should not affect previously captured
+hours.
+9. Management needs to be able to do the following:
+
+a. Create and Edit consultants and assign a Role.
+b. Capture/Store consultant Profile Image.
+c. Create and Edit Employee Roles.
+d. Change Employee Role rate per hour.
+e. Create Tasks.
+f. Assign consultant to one or more Tasks.
+g. A Task can have multiple consultants assigned.
+h. View total due to consultant over a specific timeframe.
+i. Capture hours worked for a consultant for a specific Task.
+
+Instructions
+1. Create a .Net Core API using C# and SQL Server database for data storage.
+2. Data should be accessed via a Rest API that uses an ORM (EntityFramework or Nhibernate).
+3. There should be Authentication on the API
