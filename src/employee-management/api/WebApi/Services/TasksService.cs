@@ -1,34 +1,131 @@
-﻿using WebApi.Dtos;
+﻿using Microsoft.EntityFrameworkCore;
+using WebApi.CustomExceptions;
+using WebApi.Data;
+using WebApi.Dtos;
+using WebApi.mapping;
 using WebApi.Services.Interfaces;
 using TaskEntity = WebApi.Models.Entities.Task;
+using Task = System.Threading.Tasks.Task;
 
 namespace WebApi.Services
 {
-    public class TasksService() : ITasksService
+    public class TasksService(EmployeeManagementDataContext databaseContext) : ITasksService
     {
-        public async Task CreateTaskAsync(TaskEntity task, CancellationToken cancellationToken = default)
+        public async Task CreateTaskAsync(TaskDto task, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            ValidateTaskDto(task);
+
+            TaskEntity taskEntity = new()
+            {
+                Id = Guid.NewGuid(),
+                TaskName = task.TaskName,
+                Description = task.Description,
+                MaxDuration = task.MaxDuration,
+                CreatedDate = DateTime.UtcNow,
+            };
+
+            databaseContext.Add(taskEntity);
+            await databaseContext.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<TaskDto> GetAllTasksAsync(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<TaskDto>> GetByConsultantIdAsync(Guid consultantId, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var consultant = await databaseContext.Consultants
+                                                  .Include(x => x.ConsultantTasks)
+                                                    .ThenInclude(y => y.Task)
+                                                  .FirstOrDefaultAsync(x => x.Id == consultantId, cancellationToken);
+            if (consultant is null)
+            {
+                string message = $"The consultant with ID: {consultantId} was not found.";
+                throw new EntityNotFoundException(message);
+            }
+
+            if (consultant.ConsultantTasks.Any())
+            {
+                return consultant.ConsultantTasks.Select(x => x.Task.MapToDto());
+            }
+
+            return [];
         }
 
         public async Task<TaskDto> GetTaskAsync(Guid taskId, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var task = await databaseContext.Tasks.FirstOrDefaultAsync(x => x.Id == taskId, cancellationToken);
+
+            if (task is null)
+            {
+                string message = $"The task with ID: {taskId} was not found.";
+                throw new EntityNotFoundException(message);
+            }
+
+            return task.MapToDto();
         }
 
         public async Task RemoveTaskAsync(Guid taskId, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            //When removing a task, we mark it as done
+            var task = await databaseContext.Tasks.FirstOrDefaultAsync(x => x.Id == taskId, cancellationToken);
+
+            if (task is null)
+            {
+                if (task is null)
+                {
+                    string message = $"Task with Id: {taskId} not found";
+                    throw new EntityNotFoundException(message);
+                }
+            }
+
+            task.CompletionDate = DateTime.UtcNow;
+
+            databaseContext.Tasks.Update(task);
+            await databaseContext.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task UpdateTaskAsync(TaskEntity task, CancellationToken cancellationToken = default)
+        public async Task UpdateTaskAsync(TaskDto taskDto, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            ValidateTaskDto(taskDto);
+
+            var task = await databaseContext.Tasks.FirstOrDefaultAsync(x => x.Id == taskDto.Id, cancellationToken);
+
+            if (task is null)
+            {
+                string message = $"Task with Id: {taskDto.Id} not found";
+                throw new EntityNotFoundException(message);
+            }
+            
+
+            task.TaskName = taskDto.TaskName;
+            task.Description = taskDto.Description;
+            task.MaxDuration = taskDto.MaxDuration;
+            task.CreatedDate = taskDto.CreatedDate;
+
+            databaseContext.Update(task);
+            await databaseContext.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<IEnumerable<TaskDto>> GetAllTasksAsync(CancellationToken cancellationToken = default)
+        {
+            var tasks = await databaseContext.Tasks.ToListAsync(cancellationToken);
+
+            return tasks.MapToDtos();
+        }
+
+        async Task<IEnumerable<TaskDto>> GetUnnassignedAsync(CancellationToken cancellationToken = default)
+        {
+            var unassignedTasks = await databaseContext.Tasks
+                                                       .Where(x => !databaseContext.ConsultantTasks.Any(y => x.Id == y.TaskId))
+                                                       .ToListAsync();
+
+            return unassignedTasks.MapToDtos();
+        }
+
+        private void ValidateTaskDto(TaskDto task)
+        {
+            if (task.MaxDuration <= 0)
+            {
+                string message = $"maximum duration of a task has to be greater than an hour";
+                throw new Exception(message);
+            }
         }
     }
 }
