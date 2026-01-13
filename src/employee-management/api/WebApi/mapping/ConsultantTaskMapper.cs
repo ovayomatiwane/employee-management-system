@@ -1,0 +1,50 @@
+﻿using WebApi.Dtos;
+using WebApi.Models.Entities;
+
+namespace WebApi.mapping
+{
+    public static class ConsultantTaskMapper
+    {
+        public static ConsultantTask MapToEntity(this ConsultantTaskDto consultantTaskDto)
+        {
+            return new()
+            {
+                Id = consultantTaskDto.Id,
+                RoleId = consultantTaskDto.RoleId,
+                TaskId = consultantTaskDto.TaskId,
+                ConsultantId = consultantTaskDto.ConsultantId,
+                AssignedDate = consultantTaskDto.AssignedDate,
+                HoursCompleted = consultantTaskDto.HoursCompleted,
+                Consultant = consultantTaskDto.Consultant.MapToEntity(),
+                Task = consultantTaskDto.Task.MapToEntity(),
+                Role = consultantTaskDto.Role.MapToEntity(),
+            };
+        }
+
+        public static IEnumerable<ConsultantTask> MapToEntities(this IEnumerable<ConsultantTaskDto> consultantTaskDtos)
+        {
+            return consultantTaskDtos.Select(x => x.MapToEntity());
+        }
+
+        public static ConsultantTaskDto MapToDto(this ConsultantTask consultantTask)
+        {
+            return new()
+            {
+                Id = consultantTask.Id,
+                RoleId = consultantTask.RoleId,
+                TaskId = consultantTask.TaskId,
+                ConsultantId = consultantTask.ConsultantId,
+                AssignedDate = consultantTask.AssignedDate,
+                HoursCompleted = consultantTask.HoursCompleted,
+                Consultant = consultantTask.Consultant.MapToDto(),
+                Task = consultantTask.Task.MapToDto(),
+                Role = consultantTask.Role.MapToDto(),
+            };
+        }
+
+        public static IEnumerable<ConsultantTaskDto> MapToDtos(this IEnumerable<ConsultantTask> consultantTasks)
+        {
+            return consultantTasks.Select(x => x.MapToDto());
+        }
+    }
+}
