@@ -12,6 +12,7 @@ namespace WebApi.mapping
                 Id = consultantDto.Id,
                 FirstName = consultantDto.FirstName,
                 LastName = consultantDto.LastName,
+                EmailAddress = consultantDto.EmailAddress,
             };
         }
 
@@ -27,6 +28,7 @@ namespace WebApi.mapping
                 Id = consultant.Id,
                 FirstName = consultant.FirstName,
                 LastName = consultant.LastName,
+                EmailAddress = consultant.EmailAddress,
             };
         }
 

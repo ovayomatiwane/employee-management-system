@@ -11,5 +11,7 @@
         public int MaxDuration { get; set; }
 
         public DateTime? CreatedDate { get; set; }
+        
+        public DateTime? CompletionDate { get; set; }
     }
 }
