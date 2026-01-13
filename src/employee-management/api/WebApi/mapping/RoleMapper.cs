@@ -12,12 +12,6 @@ namespace WebApi.mapping
                 Id = roleDto.Id,
 
                 Name = roleDto.Name,
-
-                HourlyRate = roleDto.HourlyRate,
-
-                CreatedDate = roleDto.CreatedDate,
-
-                RemovedDate = roleDto.RemovedDate,
             };
         }
 
@@ -33,12 +27,6 @@ namespace WebApi.mapping
                 Id = role.Id,
 
                 Name = role.Name,
-
-                HourlyRate = role.HourlyRate,
-
-                CreatedDate = role.CreatedDate,
-
-                RemovedDate = role.RemovedDate,
             };
         }
 

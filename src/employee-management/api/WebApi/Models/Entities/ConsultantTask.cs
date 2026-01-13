@@ -4,7 +4,7 @@
     {
         public required Guid Id { get; set; }
 
-        public Guid RoleId { get; set; }
+        public Guid RoleRateId { get; set; }
 
         public Guid TaskId { get; set; }
 
@@ -18,6 +18,6 @@
 
         public virtual Task Task { get; set; }
 
-        public virtual Role Role { get; set; }
+        public virtual RoleRate RoleRate { get; set; }
     }
 }

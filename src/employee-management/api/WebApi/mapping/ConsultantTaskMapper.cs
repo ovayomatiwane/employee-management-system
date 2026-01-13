@@ -10,14 +10,14 @@ namespace WebApi.mapping
             return new()
             {
                 Id = consultantTaskDto.Id,
-                RoleId = consultantTaskDto.RoleId,
+                RoleRateId = consultantTaskDto.RoleId,
                 TaskId = consultantTaskDto.TaskId,
                 ConsultantId = consultantTaskDto.ConsultantId,
                 AssignedDate = consultantTaskDto.AssignedDate,
                 HoursCompleted = consultantTaskDto.HoursCompleted,
                 Consultant = consultantTaskDto.Consultant.MapToEntity(),
                 Task = consultantTaskDto.Task.MapToEntity(),
-                Role = consultantTaskDto.Role.MapToEntity(),
+                RoleRate = consultantTaskDto.RoleRate.MapToEntity(),
             };
         }
 
@@ -31,14 +31,14 @@ namespace WebApi.mapping
             return new()
             {
                 Id = consultantTask.Id,
-                RoleId = consultantTask.RoleId,
+                RoleId = consultantTask.RoleRateId,
                 TaskId = consultantTask.TaskId,
                 ConsultantId = consultantTask.ConsultantId,
                 AssignedDate = consultantTask.AssignedDate,
                 HoursCompleted = consultantTask.HoursCompleted,
                 Consultant = consultantTask.Consultant.MapToDto(),
                 Task = consultantTask.Task.MapToDto(),
-                Role = consultantTask.Role.MapToDto(),
+                RoleRate = consultantTask.RoleRate.MapToDto(),
             };
         }
 
