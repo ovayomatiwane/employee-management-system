@@ -29,6 +29,7 @@ namespace WebApi
             builder.Services.AddScoped<IConsultantTasksService, ConsultantTasksService>();
             builder.Services.AddScoped<IRolesService, RolesService>();
             builder.Services.AddScoped<ITasksService, TasksService>();
+            builder.Services.AddScoped<IRoleRatesService, RoleRatesService>();
 
 
             var app = builder.Build();
