@@ -110,15 +110,6 @@ namespace WebApi.Services
             return tasks.MapToDtos();
         }
 
-        async Task<IEnumerable<TaskDto>> GetUnnassignedAsync(CancellationToken cancellationToken = default)
-        {
-            var unassignedTasks = await databaseContext.Tasks
-                                                       .Where(x => !databaseContext.ConsultantTasks.Any(y => x.Id == y.TaskId))
-                                                       .ToListAsync();
-
-            return unassignedTasks.MapToDtos();
-        }
-
         private void ValidateTaskDto(TaskDto task)
         {
             if (task.MaxDuration <= 0)
@@ -126,6 +117,15 @@ namespace WebApi.Services
                 string message = $"maximum duration of a task has to be greater than an hour";
                 throw new Exception(message);
             }
+        }
+
+        public async Task<IEnumerable<TaskDto>> GetUnassignedAsync(CancellationToken cancellationToken = default)
+        {
+            var unassignedTasks = await databaseContext.Tasks
+                                                       .Where(x => !databaseContext.ConsultantTasks.Any(y => x.Id == y.TaskId))
+                                                       .ToListAsync();
+
+            return unassignedTasks.MapToDtos();
         }
     }
 }
