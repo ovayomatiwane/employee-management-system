@@ -14,6 +14,7 @@ namespace WebApi.mapping
                 Description = taskDto.Description,
                 MaxDuration = taskDto.MaxDuration,
                 CreatedDate = taskDto.CreatedDate,
+                CompletionDate = taskDto.CompletionDate
             };
         }
 
@@ -31,6 +32,7 @@ namespace WebApi.mapping
                 Description = task.Description,
                 MaxDuration = task.MaxDuration,
                 CreatedDate = task.CreatedDate,
+                CompletionDate = task.CompletionDate
             };
         }
 
