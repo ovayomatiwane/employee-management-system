@@ -6,6 +6,7 @@ using WebApi.mapping;
 using WebApi.Services.Interfaces;
 using TaskEntity = WebApi.Models.Entities.Task;
 using Task = System.Threading.Tasks.Task;
+using WebApi.Dtos.QueryData;
 
 namespace WebApi.Services
 {
@@ -160,6 +161,34 @@ namespace WebApi.Services
             await databaseContext.SaveChangesAsync(cancellationToken);
 
             return taskEntity.MapToDto();
+        }
+
+        public async Task<ConsultantTaskDto> CompleteTaskHoursAsync(ConsultantTaskHoursDto completedDto, CancellationToken cancellationToken = default)
+        {
+            var consultantTask = await databaseContext.ConsultantTasks
+                                                      .FirstOrDefaultAsync(x => x.Id == completedDto.ConsultantTaskId, cancellationToken);
+
+            string message;
+            if (consultantTask is null)
+            {
+                message = $"Consultant Task with Id: {completedDto.ConsultantTaskId} not found";
+                throw new EntityNotFoundException(message);
+            }
+
+            if (consultantTask.HoursCompleted >= consultantTask.AssignedHours)
+            {
+                message = $"Maximum number of hours already completed on the ConsultantTask with Id: {completedDto.ConsultantTaskId}";
+                throw new Exception(message);
+            }
+
+            var totalHours = completedDto.CompletedHours > consultantTask.AssignedHours ? consultantTask.AssignedHours : completedDto.CompletedHours;
+
+            consultantTask.HoursCompleted = totalHours;
+            databaseContext.ConsultantTasks.UpdateRange(consultantTask);
+
+            await databaseContext.SaveChangesAsync(cancellationToken);
+
+            return consultantTask.MapToDto();
         }
     }
 }
