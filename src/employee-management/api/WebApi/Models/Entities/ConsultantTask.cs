@@ -14,6 +14,8 @@
 
         public int HoursCompleted { get; set; }
 
+        public int AssignedHours { get; set; }
+
         public virtual Consultant Consultant { get; set; }
 
         public virtual Task Task { get; set; }

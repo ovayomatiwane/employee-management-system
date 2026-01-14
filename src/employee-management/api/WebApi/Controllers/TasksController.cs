@@ -34,7 +34,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("GetUnassigned")]
-        public async Task<IActionResult> GetUnassigned([FromQuery] Guid taskId)
+        public async Task<IActionResult> GetUnassigned()
         {
             var task = await tasksService.GetUnassignedAsync();
             return Ok(task);
@@ -52,6 +52,13 @@ namespace WebApi.Controllers
         {
             await tasksService.UpdateTaskAsync(task);
             return Ok();
+        }
+
+        [HttpPut("CompleteFullTask")]
+        public async Task<IActionResult> CompleteFullTaskAsync([FromQuery] Guid taskId)
+        {
+            var result = await tasksService.CompleteAsync(taskId);
+            return Ok(result);
         }
     }
 }

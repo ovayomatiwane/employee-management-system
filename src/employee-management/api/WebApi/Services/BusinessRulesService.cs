@@ -14,10 +14,11 @@ namespace WebApi.Services
             var consultantTasks = await databaseContext.ConsultantTasks
                                                        .Include(x => x.Consultant)
                                                        .Include(x => x.RoleRate)
-                                                       .Where(x => x.ConsultantId == timeFrame.ConsultantId 
-                                                                   && x.RoleRate.StartDate <= timeFrame.TimeFrom 
-                                                                   && (x.RoleRate.EndDate >= timeFrame.TimeTo || x.RoleRate.EndDate == null))
+                                                       .Where(x => x.ConsultantId == timeFrame.ConsultantId
+                                                                   && x.RoleRate.StartDate >= timeFrame.TimeFrom 
+                                                                   && (x.RoleRate.EndDate <= timeFrame.TimeTo || x.RoleRate.EndDate == null))
                                                        .ToListAsync(cancellation);
+
 
             if (consultantTasks.Count == 0)
             {

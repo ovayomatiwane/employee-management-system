@@ -1,33 +1,51 @@
-﻿using WebApi.Dtos;
+﻿using Microsoft.EntityFrameworkCore;
+using WebApi.Data;
+using WebApi.Dtos;
+using WebApi.mapping;
+using WebApi.Models.Entities;
 using WebApi.Services.Interfaces;
 
 namespace WebApi.Services
 {
-    public class RolesService : IRolesService
+    public class RolesService(EmployeeManagementDataContext databaseContext) : IRolesService
     {
-        public async Task CreateRoleAsync(RoleDto role, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IEnumerable<RoleDto>> GetAllRoleAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var roles = await databaseContext.Roles.ToListAsync(cancellationToken);
+
+            return roles.MapToDtos();
+        }
+
+        public async Task<RoleDto> GetByNameAsync(string roleName, CancellationToken cancellationToken = default)
+        {
+            var role = await databaseContext.Roles.FirstOrDefaultAsync(x => x.Name == roleName, cancellationToken);
+
+            if (role is null)
+            {
+                return new() 
+                { 
+                    Id = Guid.Empty,
+                    Name = string.Empty
+                };
+            }
+
+            return role.MapToDto();
         }
 
         public async Task<RoleDto> GetRoleAsync(Guid roleId, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
-        }
+            var role = await databaseContext.Roles.FirstOrDefaultAsync(x => x.Id == roleId, cancellationToken);
 
-        public async Task RemoveRoleAsync(Guid roleId, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
+            if (role is null)
+            {
+                return new()
+                {
+                    Id = Guid.Empty,
+                    Name = string.Empty
+                };
+            }
 
-        public async Task UpdateRoleAsync(RoleDto role, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
+            return role.MapToDto();
         }
     }
 }
