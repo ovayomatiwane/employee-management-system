@@ -62,29 +62,35 @@ namespace WebApi.Services
 
         private void ValidateNewUser(NewUserDto user)
         {
+            string message;
             if (user == null)
             {
-                throw new ArgumentNullException(nameof(user));
+                message = $"{nameof(user)} cannot be null";
+                throw new ArgumentNullException(message);
             }
 
             if (string.IsNullOrWhiteSpace(user.Email))
             {
-                throw new ArgumentException(nameof(user.Email));
+                message = $"{nameof(user.Email)} cannot be null";
+                throw new ArgumentException(message);
             }
 
             if (string.IsNullOrWhiteSpace(user.Name))
             {
-                throw new ArgumentException(nameof(user.Name));
+                message = $"{nameof(user.Name)} cannot be null";
+                throw new ArgumentException(message);
             }
 
             if (string.IsNullOrWhiteSpace(user.Surname))
             {
-                throw new ArgumentException(nameof(user.Surname));
+                message = $"{nameof(user.Surname)} cannot be null";
+                throw new ArgumentException(message);
             }
 
             if (string.IsNullOrWhiteSpace(user.Password))
             {
-                throw new ArgumentException(nameof(user.Email));
+                message = $"{nameof(user.Email)} cannot be null";
+                throw new ArgumentException(message);
             }
         }
     }
