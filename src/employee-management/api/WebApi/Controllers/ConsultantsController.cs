@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Dtos;
 using WebApi.Services.Interfaces;
 
 namespace WebApi.Controllers
 {
+    [Authorize]
     // localhost:xxxx/api/consultants
     [Route("api/[controller]")]
     [ApiController]
