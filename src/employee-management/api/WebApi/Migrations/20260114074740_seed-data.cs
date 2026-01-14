@@ -7,12 +7,16 @@ namespace WebApi.Migrations
     /// <inheritdoc />
     public partial class seeddata : Migration
     {
+        private const string CONFIG_SCRIPTS_FOLDER = @"..\WebApi\Data\ConfigScripts\";
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            string configScripts = @"..\WebApi\Data\ConfigScripts\Seed Roles Data.sql";
+            string configScriptName;
 
-            string script = File.ReadAllText(configScripts);
+
+            //Read configs scripts into database
+            configScriptName = "Seed Roles Data.sql";
+            string script = File.ReadAllText($"{CONFIG_SCRIPTS_FOLDER}{configScriptName}");
             migrationBuilder.Sql($"EXEC(N'{script}')");
         }
 
