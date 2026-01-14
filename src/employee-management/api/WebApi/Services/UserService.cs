@@ -1,7 +1,5 @@
-﻿using Azure.Core;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using WebApi.Auth.Services.Interfaces;
-using WebApi.CustomExceptions;
 using WebApi.Data;
 using WebApi.Dtos;
 using WebApi.mapping;
