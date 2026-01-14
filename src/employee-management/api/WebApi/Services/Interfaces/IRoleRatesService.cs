@@ -5,6 +5,6 @@ namespace WebApi.Services.Interfaces
 {
     public interface IRoleRatesService
     {
-        Task<IEnumerable<RoleRateDto>> GetAll(CancellationToken cancellationToken = default);
+        Task<IEnumerable<RoleRateDto>> GetAllAsync(CancellationToken cancellationToken = default);
     }
 }

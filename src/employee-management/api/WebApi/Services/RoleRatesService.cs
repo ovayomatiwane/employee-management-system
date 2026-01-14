@@ -8,7 +8,7 @@ namespace WebApi.Services
 {
     public class RoleRatesService(EmployeeManagementDataContext databaseContext) : IRoleRatesService
     {
-        public async Task<IEnumerable<RoleRateDto>> GetAll(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<RoleRateDto>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             var roleRates = await databaseContext.RoleRates.ToListAsync(cancellationToken);
 

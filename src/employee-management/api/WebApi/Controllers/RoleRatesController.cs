@@ -9,9 +9,9 @@ namespace WebApi.Controllers
     public class RoleRatesController(IRoleRatesService roleRatesService) : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAllAsync()
         {
-            var roleRates = await roleRatesService.GetAll();
+            var roleRates = await roleRatesService.GetAllAsync();
 
             return Ok(roleRates.ToList());
         }
