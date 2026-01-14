@@ -34,7 +34,7 @@ Instructions
 
 Requirements to run the API on your local environment.
 1. Have Dotnet 8 installed on your local machine
-2. In the appsettings.json file - replace the connection string value with your local server, this is where your database will be created. ("Serve=LOCALSERVER>;Database=EmployeesManagementDb;Trusted_Connection=true;TrustServerCertificate=true;")
+2. In the appsettings.json file - replace the connection string value with your local server, this is where your database will be created. ("Serve=<LOCALSERVER>;Database=EmployeesManagementDb;Trusted_Connection=true;TrustServerCertificate=true;")
 3. In Visual Studio, with the solution open - navigate to the Package manager console tab and run the command "update-database"
 4. When this is done you can start up the application and an instance of the Swagger UI will start up.
 5. When running the application for the first time, create a  new user with your details (remember email and password) Endpont: /api/Auth/register
