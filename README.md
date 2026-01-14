@@ -30,3 +30,14 @@ Instructions
 1. Create a .Net Core API using C# and SQL Server database for data storage.
 2. Data should be accessed via a Rest API that uses an ORM (EntityFramework or Nhibernate).
 3. There should be Authentication on the API
+
+
+Requirements to run the API on your local environment.
+1. Have Dotnet 8 installed on your local machine
+2. In the appsettings.json file - replace the connection string value with your local server, this is where your database will be created. ("Serve=LOCALSERVER>;Database=EmployeesManagementDb;Trusted_Connection=true;TrustServerCertificate=true;")
+3. In Visual Studio, with the solution open - navigate to the Package manager console tab and run the command "update-database"
+4. When this is done you can start up the application and an instance of the Swagger UI will start up.
+5. When running the application for the first time, create a  new user with your details (remember email and password) Endpont: /api/Auth/register
+6. Use the email and password to login and store the token generated (returned). Endpoint: api/Auth/login
+7. You can use that token on your request header, it will expire after 60 minutes then require a new one to be generated.
+8. You can now call the different endpoints
