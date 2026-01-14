@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Dtos;
+using WebApi.Services;
 using WebApi.Services.Interfaces;
 
 namespace WebApi.Controllers
@@ -16,6 +18,20 @@ namespace WebApi.Controllers
             var roleRates = await roleRatesService.GetAllAsync();
 
             return Ok(roleRates.ToList());
+        }
+
+        [HttpPut("Update")]
+        public async Task<IActionResult> UpdateAsync([FromBody] RoleRateDto roleRate)
+        {
+            await roleRatesService.UpdateRoleRates(roleRate);
+            return Ok();
+        }
+
+        [HttpPost("Create")]
+        public async Task<IActionResult> CreateAsync([FromBody] RoleRateDto roleRate)
+        {
+            await roleRatesService.CreateRoleRates(roleRate);
+            return Ok();
         }
     }
 }

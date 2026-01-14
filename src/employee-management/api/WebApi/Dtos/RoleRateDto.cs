@@ -12,7 +12,7 @@ namespace WebApi.Dtos
 
         public DateTime? AssignedDate { get; set; }
 
-        public RoleDto Role { get; set; }
+        public RoleDto? Role { get; set; }
 
         public DateTime StartDate { get; set; }
 
