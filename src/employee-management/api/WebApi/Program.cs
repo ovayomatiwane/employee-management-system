@@ -61,6 +61,7 @@ namespace WebApi
             builder.Services.AddScoped<IRolesService, RolesService>();
             builder.Services.AddScoped<ITasksService, TasksService>();
             builder.Services.AddScoped<IRoleRatesService, RoleRatesService>();
+            builder.Services.AddScoped<IBusinessRulesService, BusinessRulesService>();
 
             //Auth
             builder.Services.AddScoped<ITokenService, TokenService>();
