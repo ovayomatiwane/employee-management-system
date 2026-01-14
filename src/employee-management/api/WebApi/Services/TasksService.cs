@@ -127,5 +127,39 @@ namespace WebApi.Services
 
             return unassignedTasks.MapToDtos();
         }
+
+        public async Task<TaskDto> CompleteAsync(Guid taskId, CancellationToken cancellationToken = default)
+        {
+            DateTime timeCompletion = DateTime.UtcNow;
+
+            var taskEntity = await databaseContext.Tasks.FirstOrDefaultAsync(x => x.Id == taskId && x.CompletionDate == null);
+
+            if (taskEntity is null)
+            {
+                string message = $"Task with Id: {taskId} is either completed or does not exist";
+                throw new Exception(message);
+            }
+
+            var consultantTasks = await databaseContext.ConsultantTasks
+                                                       .Include(x => x.RoleRate)
+                                                       .Where(x => x.TaskId == taskId)
+                                                       .ToListAsync(cancellationToken);
+
+            taskEntity.CompletionDate = timeCompletion;
+
+            foreach(var consultantTask  in consultantTasks)
+            {
+                // Complete each and update
+                consultantTask.HoursCompleted = consultantTask.AssignedHours;
+                consultantTask.RoleRate.EndDate = timeCompletion;
+            }
+
+            databaseContext.Tasks.Update(taskEntity);
+            databaseContext.ConsultantTasks.UpdateRange(consultantTasks);
+
+            await databaseContext.SaveChangesAsync(cancellationToken);
+
+            return taskEntity.MapToDto();
+        }
     }
 }

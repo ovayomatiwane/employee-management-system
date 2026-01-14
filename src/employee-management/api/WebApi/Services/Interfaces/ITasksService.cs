@@ -18,5 +18,7 @@ namespace WebApi.Services.Interfaces
         Task<IEnumerable<TaskDto>> GetByConsultantIdAsync(Guid taskId, CancellationToken cancellationToken = default);
 
         Task<IEnumerable<TaskDto>> GetUnassignedAsync(CancellationToken cancellationToken = default);
+
+        Task<TaskDto> CompleteAsync(Guid taskId, CancellationToken cancellationToken = default);
     }
 }

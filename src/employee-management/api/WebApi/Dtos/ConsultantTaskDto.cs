@@ -16,6 +16,8 @@ namespace WebApi.Dtos
 
         public int HoursCompleted { get; set; }
 
+        public int AssignedHours { get; set; }
+
         public ConsultantDto Consultant { get; set; }
 
         public TaskDto Task { get; set; }
