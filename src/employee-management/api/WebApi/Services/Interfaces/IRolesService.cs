@@ -4,11 +4,7 @@ namespace WebApi.Services.Interfaces
 {
     public interface IRolesService
     {
-        Task CreateRoleAsync(RoleDto role, CancellationToken cancellationToken = default);
-
-        Task RemoveRoleAsync(Guid roleId, CancellationToken cancellationToken = default);
-
-        Task UpdateRoleAsync(RoleDto role, CancellationToken cancellationToken = default);
+        Task<RoleDto> GetByNameAsync(string roleName, CancellationToken cancellationToken = default);
 
         Task<RoleDto> GetRoleAsync(Guid roleId, CancellationToken cancellationToken= default);
 

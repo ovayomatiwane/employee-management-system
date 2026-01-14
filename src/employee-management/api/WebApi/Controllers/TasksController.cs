@@ -34,7 +34,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("GetUnassigned")]
-        public async Task<IActionResult> GetUnassigned([FromQuery] Guid taskId)
+        public async Task<IActionResult> GetUnassigned()
         {
             var task = await tasksService.GetUnassignedAsync();
             return Ok(task);
