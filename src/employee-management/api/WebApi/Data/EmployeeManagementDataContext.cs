@@ -14,5 +14,6 @@ namespace WebApi.Data
         public DbSet<ConsultantTask> ConsultantTasks { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Task> Tasks { get; set; }
+        public DbSet<RoleRate> RoleRates { get; set; }
     }
 }

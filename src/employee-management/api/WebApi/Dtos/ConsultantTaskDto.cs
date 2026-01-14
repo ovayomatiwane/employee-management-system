@@ -20,6 +20,6 @@ namespace WebApi.Dtos
 
         public TaskDto Task { get; set; }
 
-        public RoleDto Role { get; set; }
+        public RoleRateDto RoleRate { get; set; }
     }
 }
