@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Dtos;
+using WebApi.Dtos.QueryData;
 using WebApi.Services.Interfaces;
 
 namespace WebApi.Controllers
@@ -58,6 +59,13 @@ namespace WebApi.Controllers
         public async Task<IActionResult> CompleteFullTaskAsync([FromQuery] Guid taskId)
         {
             var result = await tasksService.CompleteAsync(taskId);
+            return Ok(result);
+        }
+
+        [HttpPut("CompleteTaskHours")]
+        public async Task<IActionResult> CompleteTaskHoursAsync([FromQuery] ConsultantTaskHoursDto completedDto)
+        {
+            var result = await tasksService.CompleteTaskHoursAsync(completedDto);
             return Ok(result);
         }
     }

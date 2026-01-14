@@ -2,5 +2,8 @@
 {
     public class ConsultantTaskHoursDto
     {
+        public Guid ConsultantTaskId { get; set; }
+
+        public int CompletedHours { get; set; }
     }
 }
