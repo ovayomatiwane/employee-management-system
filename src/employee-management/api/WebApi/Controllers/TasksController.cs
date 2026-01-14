@@ -53,5 +53,12 @@ namespace WebApi.Controllers
             await tasksService.UpdateTaskAsync(task);
             return Ok();
         }
+
+        [HttpPut("CompleteFullTask")]
+        public async Task<IActionResult> CompleteFullTaskAsync([FromQuery] Guid taskId)
+        {
+            var result = await tasksService.CompleteAsync(taskId);
+            return Ok(result);
+        }
     }
 }
