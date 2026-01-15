@@ -7,6 +7,7 @@ using WebApi.Services.Interfaces;
 using TaskEntity = WebApi.Models.Entities.Task;
 using Task = System.Threading.Tasks.Task;
 using WebApi.Dtos.QueryData;
+using WebApi.Models.Entities;
 
 namespace WebApi.Services
 {
@@ -188,7 +189,14 @@ namespace WebApi.Services
 
             await databaseContext.SaveChangesAsync(cancellationToken);
 
-            return consultantTask.MapToDto();
+            var updatedConsultantTask = await databaseContext.ConsultantTasks
+                                                      .Include(x => x.Task)
+                                                      .Include(x => x.RoleRate)
+                                                        .ThenInclude(y => y.Role)
+                                                      .Include(x => x.Consultant)
+                                                      .FirstOrDefaultAsync(x => x.Id == completedDto.ConsultantTaskId, cancellationToken);
+
+            return updatedConsultantTask.MapToDto();
         }
     }
 }
