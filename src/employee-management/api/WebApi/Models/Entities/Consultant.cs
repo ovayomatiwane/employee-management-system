@@ -13,6 +13,10 @@ namespace WebApi.Models.Entities
 
         public string? EmailAddress { get; set; }
 
+        public string? ImageUrl { get; set; }
+
+        public string? ImageFileName { get; set; }
+
         public virtual HashSet<ConsultantTask> ConsultantTasks { get; set; }
     }
 }
