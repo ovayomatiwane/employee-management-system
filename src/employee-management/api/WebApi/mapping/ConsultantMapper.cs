@@ -13,6 +13,8 @@ namespace WebApi.mapping
                 FirstName = consultantDto.FirstName,
                 LastName = consultantDto.LastName,
                 EmailAddress = consultantDto.EmailAddress,
+                ImageFileName = consultantDto.ImageFileName,
+                ImageUrl = consultantDto.ImageUrl,
             };
         }
 
@@ -29,6 +31,8 @@ namespace WebApi.mapping
                 FirstName = consultant.FirstName,
                 LastName = consultant.LastName,
                 EmailAddress = consultant.EmailAddress,
+                ImageFileName = consultant.ImageFileName,
+                ImageUrl = consultant.ImageUrl,
             };
         }
 

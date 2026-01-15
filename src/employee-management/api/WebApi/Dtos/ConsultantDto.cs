@@ -9,4 +9,8 @@ public class ConsultantDto
     public required string LastName { get; set; }
 
     public string? EmailAddress { get; set; }
+
+    public string? ImageUrl { get; set; }
+
+    public string? ImageFileName { get; set; }
 }
